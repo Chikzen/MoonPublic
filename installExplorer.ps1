@@ -8,7 +8,7 @@ function func_install_Explorer {
             Invoke-WebRequest -O explorerpp_x64.zip "https://github.com/derceg/explorerplusplus/releases/download/version-1.4.0-beta-2/explorerpp_x64.zip"
         }
         if (Test-Path IpBan.zip -PathType Leaf) {
-            Expand-Archive -Path explorerpp_x64.zip "C:\Program Files\IpBan"
+            Expand-Archive -Path explorerpp_x64.zip "C:\Explorer"
             Remove-Item .\explorerpp_x64.zip
         }
     }
