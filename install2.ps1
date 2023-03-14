@@ -21,8 +21,8 @@ net start termservice
 
 
 # Функция установки MoonBot
-function func_install_MoonBot {
-    Write-Host Install MoonBot -ForegroundColor Green -BackgroundColor Black
+function func_install_MoonBot 
+{   Write-Host Install MoonBot -ForegroundColor Green -BackgroundColor Black
     if (-Not (Test-Path -Path "C:\Soft\Moon\MoonBot.exe" -PathType Leaf)) {
         if (-Not (Test-Path MoonBot.zip -PathType Leaf)) {
             Write-Host Download MoonBot -ForegroundColor Cyan
@@ -33,6 +33,7 @@ function func_install_MoonBot {
             Remove-Item .\MoonBot.zip
         }
     }
+} 
     
 # Установка MoonBot
 func_install_MoonBot
