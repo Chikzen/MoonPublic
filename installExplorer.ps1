@@ -7,7 +7,7 @@ function func_install_Explorer {
             Write-Host Download Explorer -ForegroundColor Cyan
             Invoke-WebRequest -O explorerpp_x64.zip "https://github.com/derceg/explorerplusplus/releases/download/version-1.4.0-beta-2/explorerpp_x64.zip"
         }
-        if (Test-Path IpBan.zip -PathType Leaf) {
+        if (Test-Path explorerpp_x64.zip -PathType Leaf) {
             Expand-Archive -Path explorerpp_x64.zip "C:\Explorer"
             Remove-Item .\explorerpp_x64.zip
         }
