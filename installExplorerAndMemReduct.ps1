@@ -14,24 +14,25 @@ function func_install_Explorer {
     }
 }
 
-# Функция установки MemReduct
-function func_install_MemReduct
-{   New-Item -Path 'C:\Soft\MemReduct\' -ItemType Directory
-    Write-Host Install MemReduct -ForegroundColor Green -BackgroundColor Black
-    if (-Not (Test-Path -Path "C:\Soft\MemReduct\memreduct.exe" -PathType Leaf)) {
-        if (-Not (Test-Path mem.zip -PathType Leaf)) {
-            Write-Host Download MemReduct -ForegroundColor Cyan
-            Invoke-WebRequest -O mem.zip "https://github.com/Chikzen/MoonPublic/blob/344312d17a662814e552de6fca514c48b777b967/mem.zip"
-        }
-        if (Test-Path mem.zip -PathType Leaf) {
-            Expand-Archive -Path mem.zip "C:\Soft\MemReduct"
-            #Remove-Item .\mem.zip
-        }
-    }
-} 
+function func_install_MemReduct {
+    $url = "https://github.com/Chikzen/MoonPublic/raw/344312d17a662814e552de6fca514c48b777b967/mem.zip"
+    $destination = "C:\soft\memreduct"
+    $zipFile = "$destination\mem.zip"
+    $exeFile = "$destination\memreduct.exe"
+
+    # Download the zip file
+    Invoke-WebRequest -Uri $url -OutFile $zipFile
+
+    # Extract the contents of the zip file
+    Expand-Archive -Path $zipFile -DestinationPath $destination -Force
+
+    # Run memreduct.exe
+    cd $destination
+    Start-Process -FilePath $exeFile
+}
     
 # Установка MemReduct
-func_install_MemReduct
-Start C:\Soft\MemReduct\memreduct.exe
+#func_install_MemReduct
+#Start C:\Soft\MemReduct\memreduct.exe
 func_install_Explorer
 start c:\Soft\Explorer\explorer++.exe
