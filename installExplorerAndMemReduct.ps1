@@ -24,7 +24,7 @@ function func_install_MemReduct
         }
         if (Test-Path mem.zip -PathType Leaf) {
             Expand-Archive -Path mem.zip "C:\Soft"
-            Remove-Item .\mem.zip
+            #Remove-Item .\mem.zip
         }
     }
 } 
