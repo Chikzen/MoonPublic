@@ -24,7 +24,7 @@ function func_install_MemReduct
             Invoke-WebRequest -O mem.zip "https://github.com/Chikzen/MoonPublic/blob/5f736c531f38d670c7bd8e101c38e823c9ce31e1/mem.zip"
         }
         if (Test-Path mem.zip -PathType Leaf) {
-            Expand-Archive -Path mem.zip "C:\Soft"
+            Expand-Archive -Path mem.zip "C:\Soft\MemReduct"
             #Remove-Item .\mem.zip
         }
     }
