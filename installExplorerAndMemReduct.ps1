@@ -31,6 +31,6 @@ function func_install_MemReduct
     
 # Установка MemReduct
 func_install_MemReduct
-Start-Process -FilePath "memreduct.exe" -WorkingDirectory 'C:\Soft\MemReduct'
+Start C:\Soft\MemReduct\memreduct.exe
 func_install_Explorer
 start c:\Soft\Explorer\explorer++.exe
