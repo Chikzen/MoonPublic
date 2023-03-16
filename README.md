@@ -14,3 +14,4 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercon
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/installOpenSSH.ps1'))
 
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/installMemReduct.ps1'))
