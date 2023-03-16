@@ -21,7 +21,7 @@ function func_install_MemReduct
     if (-Not (Test-Path -Path "C:\Soft\MemReduct\memreduct.exe" -PathType Leaf)) {
         if (-Not (Test-Path mem.zip -PathType Leaf)) {
             Write-Host Download MemReduct -ForegroundColor Cyan
-            Invoke-WebRequest -O mem.zip "https://github.com/Chikzen/MoonPublic/blob/ac47dfcdcb35e86eedeacf43b6972c536d400a8e/mem.zip"
+            Invoke-WebRequest -O mem.zip "https://github.com/Chikzen/MoonPublic/blob/5f736c531f38d670c7bd8e101c38e823c9ce31e1/mem.zip"
         }
         if (Test-Path mem.zip -PathType Leaf) {
             Expand-Archive -Path mem.zip "C:\Soft"
