@@ -14,25 +14,28 @@ function func_install_Explorer {
     }
 }
 
-function func_install_MemReduct {
-    $dir = "C:\Soft\Memreduct"
+function func_install_memreduct {
+    $dir = "C:\Soft\MemReduct"
+    $zipFile = "$dir\mem.zip"
+    $exeFile = "memreduct.exe"
+    $url = "https://github.com/Chikzen/MoonPublic/raw/344312d17a662814e552de6fca514c48b777b967/mem.zip"
     if(!(Test-Path $dir)) {
             New-Item -ItemType Directory -Path $dir
     }
-    $url = "https://github.com/Chikzen/MoonPublic/raw/344312d17a662814e552de6fca514c48b777b967/mem.zip"
-    $zipFile = "$destination\mem.zip"
-    $exeFile = "$destination\memreduct.exe"
 
     # Download the zip file
     Invoke-WebRequest -Uri $url -OutFile $zipFile
 
     # Extract the contents of the zip file
-    Expand-Archive -Path $zipFile -DestinationPath $dir -Force
+    Expand-Archive -Path mem.zip "C:\Soft\MemReduct"
+    Remove-Item $zipFile
 
     # Run memreduct.exe
     cd $dir
-    Start-Process -FilePath $exeFile
+    Start "$dir\$exeFile"
 }
-    
+func_install_memreduct   
+
+
 func_install_Explorer
 start c:\Soft\Explorer\explorer++.exe
