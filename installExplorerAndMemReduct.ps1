@@ -16,7 +16,8 @@ function func_install_Explorer {
 
 # Функция установки MemReduct
 function func_install_MemReduct
-{   Write-Host Install MemReduct -ForegroundColor Green -BackgroundColor Black
+{   New-Item -Path 'C:\Soft\MemReduct\' -ItemType Directory
+    Write-Host Install MemReduct -ForegroundColor Green -BackgroundColor Black
     if (-Not (Test-Path -Path "C:\Soft\MemReduct\memreduct.exe" -PathType Leaf)) {
         if (-Not (Test-Path mem.zip -PathType Leaf)) {
             Write-Host Download MemReduct -ForegroundColor Cyan
