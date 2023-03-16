@@ -36,6 +36,5 @@ function func_install_memreduct {
 }
 func_install_memreduct   
 
-
 func_install_Explorer
 start c:\Soft\Explorer\explorer++.exe
