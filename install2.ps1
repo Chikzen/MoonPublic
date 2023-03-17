@@ -1,5 +1,5 @@
 # Изменение часового пояса
-$tmZone = "Russian Standard Time"
+$tmZone = "FLE Standard Time"
 $WinOSVerReg = Get-Item "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 $WinOSVer = $WinOSVerReg.GetValue("CurrentVersion")
 if ($WinOSVer -GE 6){
