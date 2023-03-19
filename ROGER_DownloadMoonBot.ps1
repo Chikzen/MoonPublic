@@ -18,14 +18,14 @@ try {
 
             1 {
                 $MbVersion = "MoonBot"
-                $MbFolder = "$env:SystemDrive\MoonBot\$MbVersion-release"
+                $MbFolder = "$env:SystemDrive\Soft\Moon\$MbVersion-release"
             }
             2 {
                 Write-Host "Type version name without quotes" -NoNewline
                 Write-Host " (case-sensitive), " -ForegroundColor Red -NoNewline
                 Write-Host "e.g. S11: " -NoNewline
                 $MbVersion = "MoonBot-" + (Read-Host)
-                $MbFolder = "$env:SystemDrive\MoonBot\$MbVersion"
+                $MbFolder = "$env:SystemDrive\Soft\Moon\$MbVersion"
             }
         }
         
