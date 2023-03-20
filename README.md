@@ -1,6 +1,7 @@
 # MoonPublic
 cd d:\net
 pnputil -i -a .*inf
+start c:\soft\explorer\explorer++.exe
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
