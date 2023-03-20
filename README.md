@@ -1,6 +1,6 @@
 # MoonPublic
 cd d:\net
-pnputil -i -a .*inf
+pnputil -i -a *.inf
 
 start c:\soft\explorer\explorer++.exe
 
