@@ -65,9 +65,9 @@ Write-Host 'Installing Notepad3...' -ForegroundColor Cyan
 choco install notepad3 -y -r
 
 ### Install IPBan
-#Write-Host 'Installing IPBan...' -ForegroundColor Cyan
-#$ScriptPath = ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DigitalRuby/IPBan/master/IPBanCore/Windows/Scripts/install_latest.ps1'))
-#Invoke-Command -ScriptBlock ([scriptblock]::Create($ScriptPath)) -Args "silent", $true
+Write-Host 'Installing IPBan...' -ForegroundColor Cyan
+$ScriptPath = ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DigitalRuby/IPBan/master/IPBanCore/Windows/Scripts/install_latest.ps1'))
+Invoke-Command -ScriptBlock ([scriptblock]::Create($ScriptPath)) -Args "silent", $true
 
 
 #Установка и запуск Explorer++
