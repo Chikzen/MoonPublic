@@ -182,63 +182,9 @@ $list_schduleDisable =
 ("XblGameSaveTask", "\Microsoft\XblGameSave"),
 ("XblGameSaveTaskLogon", "\Microsoft\XblGameSave")
 
-# Функция установки IPBan
-function func_install_IPBan {
-    Write-Host Install IpBan -ForegroundColor Green -BackgroundColor Black
-    if (-Not (Test-Path -Path "C:\Program Files\IpBan\DigitalRuby.IPBan.exe" -PathType Leaf)) {
-        if (-Not (Test-Path IpBan.zip -PathType Leaf)) {
-            Write-Host Download IpBan -ForegroundColor Cyan
-            Invoke-WebRequest -O IpBan.zip "https://github.com/DigitalRuby/IPBan/releases/download/1.6.1/IPBan-Windows-x64_1_6_1.zip"
-        }
-        if (Test-Path IpBan.zip -PathType Leaf) {
-            Expand-Archive -Path IpBan.zip "C:\Program Files\IpBan"
-            Remove-Item .\IpBan.zip
-        }
-    }
-    $service = Get-Service -Name IpBan -ErrorAction SilentlyContinue
-    if ($service.Length -gt 0) {
-        Write-Host Service IpBan already registered -ForegroundColor Cyan
-    }
-    else {
-        Write-Host Regigtration Service IpBan -ForegroundColor Cyan
-        New-Service -Name "IpBan" -BinaryPathName '"C:\Program Files\IpBan\DigitalRuby.IPBan.exe"' | Out-Null
-        start-service IpBan | Out-Null
-        Get-CimInstance -ClassName Win32_Service -Filter "Name='IpBan'"
-        Write-Host IpBan successfully installed -ForegroundColor Cyan
-    }
-}
-
-# Функция установки MoonTrader
-function func_install_MoonTrader {
-    $mt_folder = "C:\MoonTrader\"
-    if (-Not (Test-Path -Path "$mt_folder\MTCore.exe" -PathType Leaf)) {
-        Write-Host Install MoonTrader -ForegroundColor Green -BackgroundColor Black
-        if (-Not (Test-Path MoonTrader-sfx.exe -PathType Leaf)) {
-            Write-Host Download MoonTrader -ForegroundColor Cyan
-            Invoke-WebRequest -O MoonTrader-sfx.exe "https://cdn3.moontrader.com/beta/windows-x86_64/MoonTrader-sfx.exe"
-        }
-
-        if (-Not (Test-Path -Path "$mt_folder\MoonTrader-sfx.exe" -PathType Leaf)) {
-            New-Item -ItemType Directory -Force -Path $mt_folder
-            Move-Item -Path MoonTrader-sfx.exe -Destination "$mt_folder\MoonTrader-sfx.exe"
-        }
-        Start-Process -FilePath "MoonTrader-sfx.exe" -WorkingDirectory $mt_folder
-        Write-Host wait installation -ForegroundColor Cyan
-        while (Get-Process MoonTrader-sfx -ErrorAction SilentlyContinue) {
-            Start-Sleep -s 3
-        }
-        Remove-Item "$mt_folder\MoonTrader-sfx.exe"
-        Write-Host MoonTrader successfully installed -ForegroundColor Cyan
-    } else {
-        Write-Host MoonTrader already installed -ForegroundColor Green -BackgroundColor Black
-    }
-}
 
 # Установка использования протокола шифрования HTTPS - TLS 1.2 по умолчанию
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-# Установка MoonTrader
-#func_install_MoonTrader
 
 # Установка обновлений Windows
 Write-Host Install Windows Updates -ForegroundColor Green -BackgroundColor Black
@@ -285,12 +231,6 @@ foreach ($ScheduledTaskObject in $list_schduleDisable) {
     Invoke-Expression ("Disable-ScheduledTask -TaskName " + $ScheduledTaskObject[0] + ' -TaskPath ' + $ScheduledTaskObject[1])  2>&1
 }
 
-# Добавление правил в FireWall для подключения к MTCore
-#Write-Host FireWall Allow inbound ICMPv4. -ForegroundColor Green -BackgroundColor Black
-#New-NetFirewallRule -DisplayName "Allow inbound ICMPv4" -Direction Inbound -Protocol ICMPv4 -IcmpType 8  -Action Allow | Out-Null
-#Write-Host FireWall Allow inbound UDP 4242 for MoonTrader Core. -ForegroundColor Green -BackgroundColor Black
-#New-NetFirewallRule -DisplayName "Allow inbound UDP 4242 for MoonTrader Core" -Direction Inbound -Action Allow -EdgeTraversalPolicy Allow -Protocol UDP -LocalPort 4242 | Out-Null
-
 # Отключение IPv6
 Write-Host Disable IPv6 -ForegroundColor Green -BackgroundColor Black
 Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6 | Out-Null
@@ -300,15 +240,117 @@ Write-Host Activate High Perfomance power plan -ForegroundColor Green -Backgroun
 $power_plan = Get-CimInstance -Name root\cimv2\power -Class win32_PowerPlan -Filter "ElementName = 'High Performance'"      
 powercfg /setactive ([string]$power_plan.InstanceID).Replace("Microsoft:PowerPlan\{","").Replace("}","")
 
-# Установка защиты от перебора паролей IPBan
-#func_install_IPBan
+########################################################################
 
-Write-Host "All optimisations and installations are complete. Please restart your system." -ForegroundColor Green -BackgroundColor Black
-Write-Host "MoonTrader installed in C:\MoonTrader." -ForegroundColor Yellow -BackgroundColor Black
+### Install Chocolatey
+Write-Host 'Installing Chocolatey...' -ForegroundColor Cyan
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+choco feature enable -n=allowGlobalConfirmation
+choco feature enable -n=useRememberedArgumentsForUpgrades
 
-# Запрос у пользователя о перезагрузке сервера
-if (($Host.UI.PromptForChoice("Question", "RESTART SERVER NOW?", ("&Yes", "&No") , 1)) -eq 0) {
-    Restart-Computer -Force
-} else {
-    Write-Host 'Restart cancelled' -ForegroundColor Cyan 
+### Install Chromium
+Write-Host 'Installing Chromium...' -ForegroundColor Cyan
+choco install chromium -y -r
+
+### Install 7-Zip
+Write-Host 'Installing 7-Zip...' -ForegroundColor Cyan
+choco install 7zip -y -r
+## Create handlers for archives
+$ArchiveHandlers = @("'HKLM\SOFTWARE\Classes\.7z' /ve /d '7-Zip.7z' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.7z' /ve /d '7z Archive' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.7z\DefaultIcon' /ve /d 'C:\Program Files\7-Zip\7z.dll,0' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.7z\shell' /ve /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.7z\shell\open' /ve /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.7z\shell\open\command' /ve /d 'C:\Program Files\7-Zip\7zFM.exe %1' /f",
+"'HKLM\SOFTWARE\Classes\.zip' /ve /d '7-Zip.zip' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.zip' /ve /d 'zip Archive' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.zip\DefaultIcon' /ve /d 'C:\Program Files\7-Zip\7z.dll,1' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.zip\shell' /ve /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.zip\shell\open' /ve /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.zip\shell\open\command' /ve /d 'C:\Program Files\7-Zip\7zFM.exe %1' /f",
+"'HKLM\SOFTWARE\Classes\.rar' /ve /d '7-Zip.rar' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.rar' /ve /d 'rar Archive' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.rar\DefaultIcon' /ve /d 'C:\Program Files\7-Zip\7z.dll,3' /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.rar\shell' /ve /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.rar\shell\open' /ve /f",
+"'HKLM\SOFTWARE\Classes\7-Zip.rar\shell\open\command' /ve /d 'C:\Program Files\7-Zip\7zFM.exe %1' /f")
+
+foreach ($ArchiveHandlersObject in $ArchiveHandlers) {
+  Invoke-Expression ("REG ADD " + $ArchiveHandlersObject) | Out-Null
+}
+
+### Install Mem Reduct
+Write-Host 'Installing Mem Reduct...' -ForegroundColor Cyan
+choco install memreduct -y -r
+Stop-Process -Name 'memreduct' -Force
+
+## Settings
+$MemreductSettings = @'
+[memreduct]
+AutoreductEnable=true
+AutoreductIntervalEnable=false
+HotkeyCleanEnable=false
+IsStartMinimized=true
+IsShowReductConfirmation=false
+CheckUpdatesPeriod=0
+Language=English
+IsNotificationsSound=false
+'@
+
+Set-Content -Path 'C:\Program Files\Mem Reduct\memreduct.ini' -Value $MemreductSettings
+REG ADD 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run' /v 'Mem Reduct' /t REG_SZ /d '\"C:\Program Files\Mem Reduct\memreduct.exe\" -minimized' /f
+Start-Process 'C:\Program Files\Mem Reduct\memreduct.exe' -ArgumentList '-minimized'
+
+### Install Notepad3
+Write-Host 'Installing Notepad3...' -ForegroundColor Cyan
+choco install notepad3 -y -r
+
+### Install IPBan
+Write-Host 'Installing IPBan...' -ForegroundColor Cyan
+$ScriptPath = ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DigitalRuby/IPBan/master/IPBanCore/Windows/Scripts/install_latest.ps1'))
+Invoke-Command -ScriptBlock ([scriptblock]::Create($ScriptPath)) -Args "silent", $true
+
+
+#Установка и запуск Explorer++
+New-Item -Path 'C:\Soft\Explorer\' -ItemType Directory
+function func_install_Explorer {
+    Write-Host Install Explorer -ForegroundColor Green -BackgroundColor Black
+    if (-Not (Test-Path -Path "C:\Soft\Explorer\Explorer++.exe" -PathType Leaf)) {
+        if (-Not (Test-Path explorerpp_x64.zip -PathType Leaf)) {
+            Write-Host Download Explorer -ForegroundColor Cyan
+            Invoke-WebRequest -O explorerpp_x64.zip "https://github.com/derceg/explorerplusplus/releases/download/version-1.4.0-beta-2/explorerpp_x64.zip"
+        }
+        if (Test-Path explorerpp_x64.zip -PathType Leaf) {
+            Expand-Archive -Path explorerpp_x64.zip "C:\Soft\Explorer"
+            Remove-Item .\explorerpp_x64.zip
+        }
+    }
+}
+func_install_Explorer
+#start c:\Soft\Explorer\explorer++.exe
+
+# Изменение часового пояса
+$tmZone = "FLE Standard Time"
+$WinOSVerReg = Get-Item "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+$WinOSVer = $WinOSVerReg.GetValue("CurrentVersion")
+if ($WinOSVer -GE 6){
+tzutil.exe /s $tmZone
+} Else {
+$param = "/c Start `"Change tmZone`" /MIN %WINDIR%\System32\Control.exe TIMEDATE.CPL,,/Z "
+$param += $tmZone
+$proc = [System.Diagnostics.Process]::Start( "CMD.exe", $param )
+}
+
+# Открытие и смена RDP 
+cscript C:\Windows\System32\Scregedit.wsf /ar 0
+Set-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\" -Name PortNumber -Value 31542
+New-NetFirewallRule -DisplayName "RDP-31542" -Direction Inbound -LocalPort 31542 -Protocol TCP -Action allow
+New-NetFirewallRule -DisplayName "RDP-31542" -Direction Inbound -LocalPort 31542 -Protocol UDP -Action allow
+#net stop termservice
+#net start termservice
+
+switch (Read-Host 'Restart computer now? [y/n]') {
+    y { Restart-computer -Force -Confirm:$false }
+    n { Write-Host 'Restart cancelled...' -ForegroundColor Yellow -NoNewline }
+    default { Write-Warning 'Invalid input...' }
 }
