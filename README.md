@@ -4,6 +4,8 @@ pnputil -i -a *.inf
 
 start c:\soft\explorer\explorer++.exe
 
+start C:\Program Files\Chromium\Application\chrome.exe
+
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/ROGER_InstallSoftware.ps1'))
