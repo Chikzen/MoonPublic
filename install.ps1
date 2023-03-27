@@ -329,6 +329,14 @@ function func_install_Explorer {
 func_install_Explorer
 #start c:\Soft\Explorer\explorer++.exe
 
+
+### Install OpenSSH
+Write-Host 'Installing OpenSSH...' -ForegroundColor Cyan
+choco install openssh -params '"/SSHServerFeature"'
+refreshenv
+#Enable-PSRemoting
+
+
 # Изменение часового пояса
 $tmZone = "FLE Standard Time"
 $WinOSVerReg = Get-Item "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
