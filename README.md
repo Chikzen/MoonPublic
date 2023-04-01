@@ -12,7 +12,7 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercon
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/ROGER_DownloadMoonBot.ps1'))
 
-
+iex ((New-Object System.Net.WebClient).DownloadString('https://awscli.amazonaws.com/AWSCLIV2.msi'))
 
 
 
