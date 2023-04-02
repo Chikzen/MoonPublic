@@ -28,3 +28,12 @@ Get-PSDrive | Where-Object {$_.Free -ne $null -and $_.Used -ne $null} | ForEach-
 Write-Host "Total Processes: $totalProcesses"
 Get-Process | Select-Object Name,@{Name='Memory (MB)';Expression={[math]::Round(($_.WorkingSet / 1MB), 1)}},@{Name='CPU';Expression={[math]::Round($_.CPU, 1)}} | Sort-Object -Descending 'Memory (MB)'
 
+# Инициализация нового диска
+diskpart
+list disk
+select disk [номер диска]
+create partition primary
+select partition 1
+format fs=ntfs quick
+assign letter=[буква диска]
+exit
