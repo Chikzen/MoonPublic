@@ -4,7 +4,7 @@ pnputil -i -a *.inf
 
 start c:\soft\explorer\explorer++.exe
 
-start C:\Program Files\Chromium\Application\chrome.exe
+& "C:\Program Files\Chromium\Application\chrome.exe"
 
 "C:\Program Files\Chromium\Application\chrome.exe"
 
