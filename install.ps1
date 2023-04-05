@@ -1,3 +1,6 @@
+#Отключеам автозапуск sconfig на WSC2022
+Set-SConfig -AutoLaunch $false
+
 # Список изменений которые будут добавлены в реестр
 $list_regCreate =
 @("HideSCAHealth DWORD - Hide Action Center Icon.", "'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer' /v HideSCAHealth /t REG_DWORD /d 0x1 /f"), #Confirmed that this does hide the Action Center in 2012 R2.
