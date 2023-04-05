@@ -302,8 +302,8 @@ REG ADD 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run' /v 'Mem Reduct' /t 
 Start-Process 'C:\Program Files\Mem Reduct\memreduct.exe' -ArgumentList '-minimized'
 
 ### Install Notepad3
-Write-Host 'Installing Notepad3...' -ForegroundColor Cyan
-choco install notepad3 -y -r
+#Write-Host 'Installing Notepad3...' -ForegroundColor Cyan
+#choco install notepad3 -y -r
 
 ### Install IPBan
 Write-Host 'Installing IPBan...' -ForegroundColor Cyan
