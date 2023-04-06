@@ -6,8 +6,6 @@ start c:\soft\explorer\explorer++.exe
 
 & "C:\Program Files\Chromium\Application\chrome.exe"
 
-"C:\Program Files\Chromium\Application\chrome.exe"
-
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/install.ps1'))
