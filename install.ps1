@@ -308,6 +308,8 @@ Start-Process 'C:\Program Files\Mem Reduct\memreduct.exe' -ArgumentList '-minimi
 #Write-Host 'Installing Notepad3...' -ForegroundColor Cyan
 #choco install notepad3 -y -r
 
+New-Item -ItemType Directory -Path "c:\Soft\Moon"
+
 ### Install IPBan
 Write-Host 'Installing IPBan...' -ForegroundColor Cyan
 $ScriptPath = ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DigitalRuby/IPBan/master/IPBanCore/Windows/Scripts/install_latest.ps1'))
