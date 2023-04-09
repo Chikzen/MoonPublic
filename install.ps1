@@ -362,8 +362,9 @@ New-NetFirewallRule -DisplayName "RDP-31542" -Direction Inbound -LocalPort 31542
 #net stop termservice
 #net start termservice
 
-switch (Read-Host 'Restart computer now? [y/n]') {
-    y { Restart-computer -Force -Confirm:$false }
-    n { Write-Host 'Restart cancelled...' -ForegroundColor Yellow -NoNewline }
-    default { Write-Warning 'Invalid input...' }
-}
+#switch (Read-Host 'Restart computer now? [y/n]') {
+#    y { Restart-computer -Force -Confirm:$false }
+#    n { Write-Host 'Restart cancelled...' -ForegroundColor Yellow -NoNewline }
+#    default { Write-Warning 'Invalid input...' }
+#}
+Restart-Computer
