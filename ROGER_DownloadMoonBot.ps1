@@ -12,7 +12,8 @@ try {
         Write-Host "or " -NoNewline
         Write-Host "Testing (2): " -ForegroundColor Red -NoNewline
 
-        $MbVersion = Read-Host
+        #$MbVersion = Read-Host
+        $MbVersion = "1"
 
         switch ($MbVersion) {
 
