@@ -305,8 +305,15 @@ REG ADD 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run' /v 'Mem Reduct' /t 
 Start-Process 'C:\Program Files\Mem Reduct\memreduct.exe' -ArgumentList '-minimized'
 
 ### Install Notepad3
-Write-Host 'Installing Notepad3...' -ForegroundColor Cyan
-choco install notepad3 -y -r
+#Write-Host 'Installing Notepad3...' -ForegroundColor Cyan
+#choco install notepad3 -y -r
+
+### Install Notepad++
+Write-Host 'Installing Notepad++...' -ForegroundColor Cyan
+choco install notepadplusplus -y -r
+#https://community.notepad-plus-plus.org/topic/19177/can-t-set-notepad-as-default-program-in-windows-10?_=1685452315102&lang=ru
+reg add "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe" /v "Debugger" /t REG_SZ /d "C:\Program Files\Notepad++\notepad++.exe -notepadStyleCmdline -z" /f
+#reg delete "HKLM\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe" /v "Debugger" /f
 
 New-Item -ItemType Directory -Path "c:\Soft\Moon"
 
