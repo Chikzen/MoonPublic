@@ -4,6 +4,8 @@ pnputil -i -a *.inf
 
 start c:\soft\explorer\explorer++.exe
 
+Get-ChildItem C:\Soft\Moon -Include *-strat.txt,*_edit.log –Recurse | Compress-Archive -DestinationPath C:\Soft\Moon\1.zip
+
 & "C:\Program Files\Chromium\Application\chrome.exe"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
