@@ -375,6 +375,12 @@ New-NetFirewallRule -DisplayName "RDP-31542" -Direction Inbound -LocalPort 31542
 #    default { Write-Warning 'Invalid input...' }
 #}
 
+# Добавляем NuGet 
+Register-PackageSource -Name NuGet -Location https://www.nuget.org/api/v2 -ProviderName NuGet
+# Установите модуль PowerShellGet 
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+# обновите PowerShellGet
+Install-Module -Name PowerShellGet -Repository PSGallery -Force
 
 ﻿# Download MoonBot
 
