@@ -32,6 +32,21 @@ Get-PSDrive | Where-Object {$_.Free -ne $null -and $_.Used -ne $null} | ForEach-
 Write-Host "Total Processes: $totalProcesses"
 Get-Process | Select-Object Name,@{Name='Memory (MB)';Expression={[math]::Round(($_.WorkingSet / 1MB), 1)}},@{Name='CPU';Expression={[math]::Round($_.CPU, 1)}} | Sort-Object -Descending 'Memory (MB)'
 
+# Информация о процессоре
+Get-WmiObject Win32_Processor | Select-Object Name, Manufacturer, MaxClockSpeed, NumberOfCores, NumberOfLogicalProcessors
+
+# Информация об оперативной памяти (детализированно)
+Write-Host "`nИнформация об оперативной памяти (детально):"
+Get-WmiObject Win32_PhysicalMemory | Select-Object @{Name="CapacityGB";Expression={[math]::Round($_.Capacity / 1Gb, 1)}}, Speed
+
+# Общая информация об оперативной памяти
+Write-Host "`nОбщая информация об оперативной памяти:"
+Get-WmiObject Win32_ComputerSystem | Select-Object @{Name="TotalMemoryGB";Expression={[math]::Round($_.TotalPhysicalMemory / 1Gb, 1)}}
+
+# Информация о дисковом пространстве
+Get-WmiObject Win32_LogicalDisk | Select-Object DeviceID, MediaType, @{Name="SizeGB";Expression={[math]::Round($_.Size / 1Gb, 1)}}, @{Name="FreeSpaceGB";Expression={[math]::Round($_.FreeSpace / 1Gb, 1)}}
+
+
 # Инициализация нового диска
 diskpart
 
