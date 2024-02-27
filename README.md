@@ -4,23 +4,6 @@ pnputil -i -a *.inf
 
 start c:\soft\explorer\explorer++.exe
 
-https://user:samantafox@mypkeen.keenetic.link/webdav/1.iso
-
-
-
-
-cd C:\Soft
-mkdir NodeJsProg
-cd C:\Soft\NodeJsProg
-curl -L -o sendJson.js "ссылка на гитхаб файл"
-npm init -y
-npm install express basic-auth sqlite3 qckwinsvc fs-extra express-basic-auth axios 
-schtasks /create /sc minute /mo 10 /tn "RunNodeScript" /tr "node C:\Soft\NodeJsProg\sendJson.js"
-schtasks /change /tn "RunNodeScript" /ru SYSTEM
-
-
-
-
 
 
 Get-ChildItem C:\Soft\Moon -Include *-strat.txt,*_edit.log –Recurse | Compress-Archive -DestinationPath C:\Soft\Moon\1.zip
