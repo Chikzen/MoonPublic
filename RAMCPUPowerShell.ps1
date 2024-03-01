@@ -2,11 +2,11 @@ $diskC = Get-WmiObject Win32_LogicalDisk -Filter "DeviceID='C:'" | Select-Object
 $freeSpaceGB = [math]::round($diskC.FreeSpace / 1GB, 2)
 $totalSizeGB = [math]::round($diskC.Size / 1GB, 2)
 $usedSpaceGB = $totalSizeGB - $freeSpaceGB
-Write-Host "All: $totalSizeGB GB, Used: $usedSpaceGB GB, Free: $freeSpaceGB GB"
+Write-Host "All disk space: $totalSizeGB GB, Used: $usedSpaceGB GB, Free: $freeSpaceGB GB"
 $ram = Get-WmiObject Win32_ComputerSystem
 $totalRAM = [math]::round($ram.TotalPhysicalMemory / 1GB, 2)
 $usedRAM = [math]::round(($ram.TotalPhysicalMemory - (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory*1024) / 1GB, 2)
-Write-Host "Total $totalRAM GB, Used $usedRAM GB, CPU $($cpuLoad.Average)%"
+Write-Host "Total RAM: $totalRAM GB, Used RAM: $usedRAM GB, Used CPU: $($cpuLoad.Average)%"
 $cpuLoad = Get-WmiObject win32_processor | Measure-Object -property LoadPercentage -Average | Select Average
 Get-Process | ForEach-Object {
     $_ | Add-Member -Type NoteProperty -Name CPU_Usage -Value ([math]::Round($_.CPU, 1))
