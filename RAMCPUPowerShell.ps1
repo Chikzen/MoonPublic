@@ -21,4 +21,5 @@ Write-Host "Диск C: Всего места: $totalSizeGB GB, Занято: $u
 $ram = Get-WmiObject Win32_ComputerSystem
 $totalRAM = [math]::round($ram.TotalPhysicalMemory / 1GB, 2)
 $usedRAM = [math]::round(($ram.TotalPhysicalMemory - (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory*1024) / 1GB, 2)
-Write-Host "Оперативная память: Всего: $totalRAM GB, Используется: $usedRAM GB"
+Write-Host "Total $totalRAM GB, Used $usedRAM GB"
+
