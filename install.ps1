@@ -447,6 +447,6 @@ finally {
     Write-Host "`nExiting" -ForegroundColor Cyan
 }
 
-
+choco install nodejs
 Register-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'c:\soft\explorer\explorer++.exe') -Trigger (New-ScheduledTaskTrigger -AtLogon) -Principal (New-ScheduledTaskPrincipal -UserId "Administrator" -LogonType Interactive) -TaskName "StartExplorer++AtLogon" -Description "Запуск Explorer++ при входе Administrator"
 Restart-Computer
