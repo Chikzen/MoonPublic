@@ -21,7 +21,6 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercon
 iex ((New-Object System.Net.WebClient).DownloadString('https://awscli.amazonaws.com/AWSCLIV2.msi'))
 
 
-
 $totalProcesses = (Get-Process).Count
 
 $cpuUsage = [math]::Round((Get-Counter '\Processor(_Total)\% Processor Time').CounterSamples.CookedValue, 2)
@@ -38,11 +37,12 @@ Write-Host "Free memory: $freeMemoryPercentage%"
 
 Write-Host "CPU Usage: $cpuUsage%"
 
-Get-PSDrive | Where-Object {$_.Free -ne $null -and $_.Used -ne $null} | ForEach-Object { 
+Get-PSDrive | Where-Object {$_.Free -ne $null -and $_.Used -ne $null} | ForEach-Object {
     $freeSpaceGB = $_.Free / 1GB
-    $usedSpaceGB = ($_.Used / 1GB)
-    "{0}: {1:N2} GB free, {2:N2} GB used" -f $_.Name, $freeSpaceGB, $usedSpaceGB 
+    $usedSpaceGB = $_.Used / 1GB
+    "{0}: {1:N2} GB free, {2:N2} GB used" -f $_.Name, $freeSpaceGB, $usedSpaceGB
 }
+
 
 Write-Host "Total Processes: $totalProcesses"
 
