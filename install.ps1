@@ -449,5 +449,9 @@ finally {
 
 #choco install nodejs
 choco install nodejs.install --version=21.7.1
+cd C:\Soft\
+mkdir NodeJsProg
+cd C:\Soft\NodeJsProg
+
 Register-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'c:\soft\explorer\explorer++.exe') -Trigger (New-ScheduledTaskTrigger -AtLogon) -Principal (New-ScheduledTaskPrincipal -UserId "Administrator" -LogonType Interactive) -TaskName "StartExplorer++AtLogon" -Description "Запуск Explorer++ при входе Administrator"
 Restart-Computer
