@@ -14,6 +14,8 @@ Get-ChildItem C:\Soft\Moon -Include *-strat.txt,*_edit.log –Recurse | Compress
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/install.ps1'))
 
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/cleaning.ps1'))
+
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/ROGER_DownloadMoonBot.ps1'))
 
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Chikzen/MoonPublic/main/RAMCPUPowerShell.ps1'))
