@@ -18,6 +18,6 @@ vssadmin delete shadows /for=C: /all /quiet
 # Видалення не потрібних пакетів
 dism.exe /online /cleanup-image /startcomponentcleanup /resetbase
 
-cd C:\Soft\NodeJsProg
-npm init -y
-npm install express basic-auth sqlite3 qckwinsvc fs-extra express-basic-auth axios 
+#cd C:\Soft\NodeJsProg
+#npm init -y
+#npm install express basic-auth sqlite3 qckwinsvc fs-extra express-basic-auth axios 
