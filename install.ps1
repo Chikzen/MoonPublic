@@ -453,5 +453,7 @@ cd C:\Soft\
 mkdir NodeJsProg
 cd C:\Soft\NodeJsProg
 
+choco install sqlitebrowser
+
 Register-ScheduledTask -Action (New-ScheduledTaskAction -Execute 'c:\soft\explorer\explorer++.exe') -Trigger (New-ScheduledTaskTrigger -AtLogon) -Principal (New-ScheduledTaskPrincipal -UserId "Administrator" -LogonType Interactive) -TaskName "StartExplorer++AtLogon" -Description "Запуск Explorer++ при входе Administrator"
 Restart-Computer
